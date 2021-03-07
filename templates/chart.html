@@ -58,8 +58,8 @@ Chart.defaults.global.responsive = false;
  });
 
  // Bar chart
- var bar = document.getElementById("myCanvas").getContext("2d");
- var myz = new Chart(bar, {
+ var ctx = document.getElementById("myCanvas").getContext("2d");
+ var myChart = new Chart(ctx, {
    type: 'bar',
    data: chartData,
  });

@@ -366,8 +366,14 @@ def final():
     personnel = staffStat()
     ammo = ammoStat()
     fuel = fuelStat()
+    labels = ["KIA", "WIA", "MIA",""]
+    values = []
+    values.append(total_KIA)
+    values.append(total_WIA)
+    values.append(total_MIA+1)
     
-    return render_template("./final.html", firstDate = first, lastDate = last,KIA = total_KIA, MIA = total_MIA, WIA = total_WIA, totalMessages=total, totalAuthors=authorTotal, sitRep = mostRecent, saluteReport = salute, ammoStatus = ammo, fuelStatus = fuel, personnelStatus = personnel)
+    
+    return render_template("./final.html", firstDate = first, lastDate = last,KIA = total_KIA, MIA = total_MIA, WIA = total_WIA, totalMessages=total, totalAuthors=authorTotal, sitRep = mostRecent, saluteReport = salute, ammoStatus = ammo, fuelStatus = fuel, personnelStatus = personnel, labels=labels,values=values)
 
 
 @app.route("/allSitreps", methods=["GET", "POST"])
