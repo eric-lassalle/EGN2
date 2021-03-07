@@ -1,15 +1,17 @@
 <head>
     <meta charset="utf-8" />
-    <title>Chart.js Example</title>
+    <title>US ARMY</title>
     <!-- import plugin script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   </head>
-  The chart is then defined as a HTML5 canvas element:
   
-  <h1>Simple Line Chart</h1>
+  
+  <h1>Line Chart For You Guys 🎉</h1>
   <!-- bar chart canvas element -->
   <canvas id="myChart" width="600" height="400"></canvas>
-  <p id="caption">The chart is displaying a simple line chart.</p>
+  <br>
+  <h1>Second Canvas</h1>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
   <script> 
     // Global parameters:
 // do not resize the chart canvas when its container does (keep at 600x400px)
@@ -54,7 +56,11 @@ Chart.defaults.global.responsive = false;
    type: 'line',
    data: chartData,
  });
- 
- displaying
- 
+
+ // Bar chart
+ var bar = document.getElementById("myCanvas").getContext("2d");
+ var myz = new Chart(bar, {
+   type: 'bar',
+   data: chartData,
+ });
   </script>
