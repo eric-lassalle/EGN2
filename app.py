@@ -422,3 +422,16 @@ def carousel():
     
     
     return render_template("./carousel.html", totalMessages = total, messages = container )   
+
+# Test page for chart
+@app.route("/chart", methods = ["GET", "POST"])
+def chart():
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    return render_template("./chart.html", values=values, labels=labels, legend=legend)
+ 
+ 
+  
+    
+    
