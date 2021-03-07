@@ -426,6 +426,7 @@ def carousel():
 # Test page for chart
 @app.route("/chart", methods = ["GET", "POST"])
 def chart():
+    test = 0
     legend = 'Monthly Data'
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
