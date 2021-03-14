@@ -32,7 +32,17 @@ timeStampInfo = ""
 nameInfo = ""
 msgInfo = ""
 
+#Eric's Changes
+labelInfo = ""
+z = 10
+#---------------
+
 container = []
+
+#Eric's Changes
+bar_label = []
+bar_value = []
+#---------------
 
 # for line in FileContent:
 #   #
@@ -58,16 +68,40 @@ with open("./data/data.txt") as fileobj:
 
       elif char == "[":
         timestampBool = True
+        
         if msgBool == True:
           container.append(Message(timeStampInfo, nameInfo, msgInfo))
+
+          #Eric's Changes
+          if labelInfo != "":
+            bar_label.append(labelInfo)
+          #---------------
+
           #re initialize temp vars
           timeStampInfo = ""
           nameInfo = ""
           msgInfo = ""
           msgBool = False
+
+          #Eric's changes
+          labelInfo = ""
+          z = 10
+          #---------------
+
       else:
         if timestampBool == True:
           timeStampInfo += char
+
+          #Eric's changes
+          if z > 0:
+            if char != "0" and char != "1" and char != "2" and char != "3" and char != "4" and char != "5" and char != "6" and char != "7" and char != "8" and char != "9" and char != "/":
+              z = 0
+              labelInfo = ""
+            else: 
+              labelInfo += char
+              z -= 1
+          #---------------
+
         #  print(timeStampInfo)
 
         if nameBool == True:
@@ -79,6 +113,23 @@ with open("./data/data.txt") as fileobj:
         #  print(msgInfo)
 
 container.append(Message(timeStampInfo, nameInfo, msgInfo)) #after exiting the loop, the temp variables are still stored so we can append the final message...
+
+#Eric's Changes
+def valueCounter():
+  seen = {}
+  j = 0
+  for i in range(len(bar_label)):
+    temp = bar_label[i]
+    if temp in seen:
+      bar_value[j] += 1
+      seen[temp] += 1
+    else:
+      if i > 0:
+        j += 1
+      bar_value.append(1)
+      seen[temp] = 1
+  return seen.keys()
+#---------------
 
 def showSitreps(): #function that prints all sitreps of the given file
   ret = []
@@ -366,14 +417,8 @@ def final():
     personnel = staffStat()
     ammo = ammoStat()
     fuel = fuelStat()
-    labels = ["KIA", "WIA", "MIA",""]
-    values = []
-    values.append(total_KIA)
-    values.append(total_WIA)
-    values.append(total_MIA+1)
     
-    
-    return render_template("./final.html", firstDate = first, lastDate = last,KIA = total_KIA, MIA = total_MIA, WIA = total_WIA, totalMessages=total, totalAuthors=authorTotal, sitRep = mostRecent, saluteReport = salute, ammoStatus = ammo, fuelStatus = fuel, personnelStatus = personnel, labels=labels,values=values)
+    return render_template("./final.html", firstDate = first, lastDate = last,KIA = total_KIA, MIA = total_MIA, WIA = total_WIA, totalMessages=total, totalAuthors=authorTotal, sitRep = mostRecent, saluteReport = salute, ammoStatus = ammo, fuelStatus = fuel, personnelStatus = personnel)
 
 
 @app.route("/allSitreps", methods=["GET", "POST"])
@@ -437,6 +482,15 @@ def chart():
     labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
     values = [10, 9, 8, 7, 6, 4, 7, 8]
     return render_template("./chart.html", values=values, labels=labels, legend=legend)
+
+#Eric's Changes
+@app.route("/barChart", methods = ["GET", "POST"])
+def barChart():
+    test = 0
+    legend = 'Message Count'
+    labels = valueCounter()
+    values = bar_value
+    return render_template("./barChart.html", values=bar_value, labels=labels, legend=legend, title="Message Count for Each Day")
  
  
   
